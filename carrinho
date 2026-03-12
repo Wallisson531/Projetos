@@ -1,0 +1,27 @@
+import java.util.ArrayList;
+
+public class Carrinho {
+    private ArrayList<Produto> itens = new ArrayList<>();
+
+    public void adicionar(Produto p) {
+        itens.add(p);
+        System.out.println(p.getNome() + " adicionado ao carrinho!");
+    }
+
+    public void mostrarCarrinho() {
+        if (itens.isEmpty()) {
+            System.out.println("Carrinho vazio!");
+            return;
+        }
+
+        System.out.println("\n--- CARRINHO ---");
+        double total = 0;
+
+        for (Produto p : itens) {
+            System.out.println(p);
+            total += p.getPreco();
+        }
+
+        System.out.println("Total: R$ " + total);
+    }
+}
