@@ -26,3 +26,99 @@ public class Produto {
         return id + " - " + nome + " | R$ " + preco;
     }
 }
+import java.util.ArrayList;
+
+public class Carrinho {
+    private ArrayList<Produto> itens = new ArrayList<>();
+
+    public void adicionar(Produto p) {
+        itens.add(p);
+        System.out.println(p.getNome() + " adicionado ao carrinho!");
+    }
+
+    public void mostrarCarrinho() {
+        if (itens.isEmpty()) {
+            System.out.println("Carrinho vazio!");
+            return;
+        }
+
+        System.out.println("\n--- CARRINHO ---");
+        double total = 0;
+
+        for (Produto p : itens) {
+            System.out.println(p);
+            total += p.getPreco();
+        }
+
+        System.out.println("Total: R$ " + total);
+    }
+}
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Loja {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        ArrayList<Produto> produtos = new ArrayList<>();
+        produtos.add(new Produto(1, "Mouse Gamer", 89.90));
+        produtos.add(new Produto(2, "Teclado Mecânico", 299.00));
+        produtos.add(new Produto(3, "Headset RGB", 199.99));
+        produtos.add(new Produto(4, "Monitor 27\"", 1299.50));
+
+        Carrinho carrinho = new Carrinho();
+
+        int opcao = 0;
+
+        while (opcao != 4) {
+            System.out.println("\n=== LOJA ONLINE ===");
+            System.out.println("1 - Ver produtos");
+            System.out.println("2 - Adicionar produto ao carrinho");
+            System.out.println("3 - Ver carrinho");
+            System.out.println("4 - Finalizar compra / Sair");
+            System.out.print("Escolha: ");
+            opcao = sc.nextInt();
+
+            switch (opcao) {
+                case 1:
+                    System.out.println("\n--- PRODUTOS DISPONÍVEIS ---");
+                    for (Produto p : produtos) {
+                        System.out.println(p);
+                    }
+                    break;
+
+                case 2:
+                    System.out.print("Digite o ID do produto: ");
+                    int id = sc.nextInt();
+                    Produto escolhido = null;
+
+                    for (Produto p : produtos) {
+                        if (p.getId() == id) {
+                            escolhido = p;
+                            break;
+                        }
+                    }
+
+                    if (escolhido != null) {
+                        carrinho.adicionar(escolhido);
+                    } else {
+                        System.out.println("Produto não encontrado.");
+                    }
+                    break;
+
+                case 3:
+                    carrinho.mostrarCarrinho();
+                    break;
+
+                case 4:
+                    System.out.println("\nCompra finalizada! Obrigado por comprar. 🛒");
+                    break;
+
+                default:
+                    System.out.println("Opção inválida.");
+            }
+        }
+
+        sc.close();
+    }
+}
